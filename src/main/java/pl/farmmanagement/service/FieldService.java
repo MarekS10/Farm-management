@@ -28,6 +28,7 @@ public class FieldService {
                 .builder()
                 .name(dto.getName())
                 .area(dto.getArea())
+                .operationsList(dto.getOperationsList())
                 .build();
     }
 
@@ -37,6 +38,7 @@ public class FieldService {
                 .id(field.getId())
                 .name(field.getName())
                 .area(field.getArea())
+                .operationsList(field.getOperationsList())
                 .build();
     }
 }
