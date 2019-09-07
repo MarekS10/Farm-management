@@ -26,7 +26,7 @@
             </tr>
             <tr>
                 <td>
-                    <label th:for="area">Last name:</label>
+                    <label th:for="area">Field area:</label>
                     <input type="text" th:id="area" th:field="*{area}">
                     <p th:if="${#fields.hasErrors('area')}"
                        th:errors="*{area}"
