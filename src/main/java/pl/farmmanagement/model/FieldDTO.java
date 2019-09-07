@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 
 @Data
 @Builder
@@ -14,8 +14,11 @@ import javax.validation.constraints.NotNull;
 public class FieldDTO {
 
     private Long id;
+
     @NotNull(message = "required")
+    @Size(min = 1, message = "required")
     private String name;
-    @NotNull(message = "required")
+
+    @Positive(message = "Must be higher that 0")
     private double area;
 }
