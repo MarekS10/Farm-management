@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head xmlns:th="http://www.thymeleaf.org">
+    <meta charset="UTF-8">
+    <title>Formularz</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/customers-list-style.css">
+</head>
+<body>
+<div id="container">
+<form action="#" th:action="@{/singup}" th:object = "${user}" method="post">
+
+    <h2>User Registration</h2>
+    <table class="table">
+        <tr>
+            <td>
+                <label th:for="userName">User name:</label>
+                <input type="text" th:id="userName" th:field="*{userName}">
+                <p th:if="${#fields.hasErrors('userName')}"
+                   th:errors="*{userName}"
+                   class="error">User name error</p>
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label th:for="password">Password</label>
+                <input type="password" th:id="password" th:field="*{password}">
+                <p th:if="${#fields.hasErrors('password')}"
+                   th:errors="*{password}"
+                   class="error">Password error</p>
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label th:for="eMail">Email:</label>
+                <input type="text" th:id="eMail" th:field="*{eMail}">
+                <p th:if="${#fields.hasErrors('eMail')}"
+                   th:errors="*{eMail}"
+                   class="error">Email error</p>
+            </td>
+        </tr>
+        <tr>
+        <td>
+            <label th:for="givenName">First name:</label>
+            <input type="text" th:id="givenName" th:field="*{givenName}">
+            <p th:if="${#fields.hasErrors('givenName')}"
+               th:errors="*{givenName}"
+               class="error">First name error</p>
+            </p>
+        </td>
+        </tr>
+        <tr>
+            <td>
+                <label th:for="surname">Last name:</label>
+                <input type="text" th:id="surname" th:field="*{surname}">
+                <p th:if="${#fields.hasErrors('surname')}"
+                   th:errors="*{surname}"
+                   class="error">Last name error</p>
+            </td>
+        </tr>
+    </table>
+    <button class="btn btn-primary" type="submit">Save</button>
+
+</form>
+</div>
+</body>
+</html>

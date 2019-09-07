@@ -1,4 +1,4 @@
-package pl.farmmanagement.dto;
+package pl.farmmanagement.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserDTO {
+public class User {
 
   private Long id;
 
@@ -26,6 +26,7 @@ public class UserDTO {
       message = "Minimum eight characters, at least one letter and one number")
   private String password;
 
+  @NotNull(message = "Required")
   @Pattern(regexp = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$", message = "Invalid email")
   private String eMail;
 
