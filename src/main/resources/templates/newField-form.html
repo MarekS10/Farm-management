@@ -1,11 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>New field</title>
 </head>
 <body>
+<div id="container">
+    <h2>Add new field</h2>
 
+    <form action="#" th:action="@{/user/saveField}" th:object="${newField}" method="post">
+
+        <input type="hidden" th:field="*{id}">
+
+        <table class="table">
+
+            <tr>
+                <td>
+                    <label th:for="fieldName">Field name:</label>
+                    <input type="text" th:id="fieldName" th:field="*{name}">
+                    <p th:if="${#fields.hasErrors('name')}"
+                       th:errors="*{name}"
+                       class="error">Field name error</p>
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label th:for="area">Last name:</label>
+                    <input type="text" th:id="area" th:field="*{area}">
+                    <p th:if="${#fields.hasErrors('area')}"
+                       th:errors="*{area}"
+                       class="error">Area error</p>
+                </td>
+            </tr>
+        </table>
+        <button class="btn btn-primary" type="submit">Save</button>
+    </form>
+</div>
 
 </body>
 </html>
