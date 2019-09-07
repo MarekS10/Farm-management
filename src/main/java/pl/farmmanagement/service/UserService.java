@@ -15,16 +15,29 @@ public class UserService {
   private final Logger logger = LoggerFactory.getLogger(UserService.class);
   private final UserRepository userRepository;
 
-  public UserDTO add(UserEntity user) {
-    userRepository.save(user);
+  public UserDTO add(UserDTO user) {
+    UserEntity entity = maptoUser(user);
+    userRepository.save(entity);
     logger.info("User {} with id: {} has been added to database", user.getUserName(), user.getId());
-    return mapToUserDTO(user);
+    return mapToUserDTO(entity);
+  }
+
+  private UserEntity maptoUser(UserDTO a) {
+    return UserEntity.builder()
+        .id(a.getId())
+        .userName(a.getUserName())
+        .password(a.getPassword())
+        .eMail(a.getEMail())
+        .givenName(a.getGivenName())
+        .surname(a.getSurname())
+        .build();
   }
 
   private UserDTO mapToUserDTO(UserEntity a) {
     return UserDTO.builder()
         .id(a.getId())
         .userName(a.getUserName())
+        .password(a.getPassword())
         .eMail(a.getEMail())
         .givenName(a.getGivenName())
         .surname(a.getSurname())
