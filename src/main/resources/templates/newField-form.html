@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>New field</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/error-style.css">
 </head>
 <body>
 <div id="container">
@@ -26,7 +29,7 @@
             </tr>
             <tr>
                 <td>
-                    <label th:for="area">Field area:</label>
+                    <label th:for="area">Field area (ha):</label>
                     <input type="text" th:id="area" th:field="*{area}">
                     <p th:if="${#fields.hasErrors('area')}"
                        th:errors="*{area}"
