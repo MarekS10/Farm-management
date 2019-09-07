@@ -6,24 +6,24 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
+import java.time.LocalDate;
 
 @Entity
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class FieldEntity {
+@AllArgsConstructor
+public class FieldOperationEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(unique = true,nullable = false)
-    private String name;
+    @Column(nullable = false)
+    private LocalDate operationDate;
 
     @Column(nullable = false)
-    private double area;
+    private String task;
 
-    private List<FieldOperationEntity> operationsList;
+    private boolean isDone;
 }
