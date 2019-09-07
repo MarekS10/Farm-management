@@ -5,22 +5,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
-@Entity
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class FieldEntity {
+@AllArgsConstructor
+public class FieldDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Column(unique = true,nullable = false)
+    @NotNull(message = "required")
     private String name;
-
-    @Column(nullable = false)
+    @NotNull(message = "required")
     private double area;
 }
