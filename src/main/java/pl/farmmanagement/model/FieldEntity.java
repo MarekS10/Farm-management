@@ -25,5 +25,7 @@ public class FieldEntity {
     @Column(nullable = false)
     private double area;
 
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "id",
+    cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
     private List<FieldOperationEntity> operationsList;
 }
