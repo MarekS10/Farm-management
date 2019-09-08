@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import pl.farmmanagement.dto.UserDTO;
+import pl.farmmanagement.model.User;
 import pl.farmmanagement.model.UserEntity;
 import pl.farmmanagement.repository.UserRepository;
 
@@ -15,14 +15,19 @@ public class UserService {
   private final Logger logger = LoggerFactory.getLogger(UserService.class);
   private final UserRepository userRepository;
 
-  public UserDTO add(UserDTO user) {
+  public User add(User user) {
     UserEntity entity = maptoUser(user);
     userRepository.save(entity);
     logger.info("User {} with id: {} has been added to database", user.getUserName(), user.getId());
     return mapToUserDTO(entity);
   }
 
-  private UserEntity maptoUser(UserDTO a) {
+  public User getByUserName(String userName){
+    UserEntity byUserName = userRepository.findByUserName(userName);
+    return mapToUserDTO(byUserName);
+  }
+
+  private UserEntity maptoUser(User a) {
     return UserEntity.builder()
         .id(a.getId())
         .userName(a.getUserName())
@@ -33,9 +38,9 @@ public class UserService {
         .build();
   }
 
-  private UserDTO mapToUserDTO(UserEntity a) {
-    return UserDTO.builder()
-        .id(a.getId())
+  private User mapToUserDTO(UserEntity a) {
+    return User.builder()
+
         .userName(a.getUserName())
         .password(a.getPassword())
         .eMail(a.getEMail())

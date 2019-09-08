@@ -5,7 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 @Data
@@ -18,18 +21,9 @@ public class UserEntity {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
-  @Column(unique = true, nullable = false, updatable = false)
   private String userName;
-
-  @Column(nullable = false)
   private String password;
-
-  @Column(unique = true, nullable = false)
   private String eMail;
-
-  @Column(nullable = false)
   private String givenName;
-
-  @Column(nullable = false)
   private String surname;
 }
