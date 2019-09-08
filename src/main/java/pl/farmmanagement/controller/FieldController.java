@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.farmmanagement.model.FieldDTO;
 import pl.farmmanagement.service.FieldService;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @Controller
@@ -20,9 +21,9 @@ public class FieldController {
     private final FieldService fieldService;
 
     @InitBinder
-    public void initBinder(WebDataBinder webDataBinder){
+    public void initBinder(WebDataBinder webDataBinder) {
         StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
-        webDataBinder.registerCustomEditor(String.class,stringTrimmerEditor);
+        webDataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
     @GetMapping("/newField")
@@ -34,11 +35,13 @@ public class FieldController {
 
     @PostMapping("/newField")
     public String saveField(@ModelAttribute("newField") @Valid FieldDTO field,
-                            BindingResult bindingResult) {
+                            BindingResult bindingResult, HttpServletResponse httpServletResponse) {
         if (bindingResult.hasErrors()) {
+            httpServletResponse.setStatus(HttpServletResponse.SC_CONFLICT);
             return "newField-form";
         } else {
             fieldService.addField(field);
+            httpServletResponse.setStatus(HttpServletResponse.SC_CREATED);
             return "redirect:/user";
         }
     }
