@@ -17,7 +17,7 @@ public class FieldDTO {
     private Long id;
 
     @NotNull(message = "Required")
-    @Size(min = 1, message = "Required")
+    @Size(min = 1,message = "Required")
     private String name;
 
     @Positive(message = "Must be higher that 0")
