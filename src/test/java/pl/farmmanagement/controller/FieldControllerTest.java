@@ -31,8 +31,6 @@ public class FieldControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
-    //TODO create test when field has correct data after creating the endpoint for /user
-
     @Test
     public void whenCreateFieldWithIncorrectData_thenReturnsStatusConflict() throws Exception {
         FieldDTO field = FieldDTO
@@ -44,6 +42,18 @@ public class FieldControllerTest {
         mvc.perform(MockMvcRequestBuilders.post("/user/newField").flashAttr("newField",field))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isConflict());
+    }
+
+    @Test
+    public void whenCreateFieldWithCorrectData_thenReturnsStatusFound() throws Exception {
+        FieldDTO field = FieldDTO
+                .builder()
+                .name("Field-1")
+                .area(10.1)
+                .build();
+        mvc.perform(MockMvcRequestBuilders.post("/user/newField").flashAttr("newField",field))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isFound());
     }
 
 
