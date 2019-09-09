@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.UniqueElements;
 
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.*;
 import java.util.List;
 
@@ -24,4 +26,6 @@ public class FieldDTO {
     private double area;
 
     private List<FieldOperationEntity> operationsList;
+
+    private UserEntity userEntity;
 }

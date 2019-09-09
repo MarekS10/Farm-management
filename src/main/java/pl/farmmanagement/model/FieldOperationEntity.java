@@ -26,4 +26,8 @@ public class FieldOperationEntity {
     private String task;
 
     private boolean isDone;
+
+    @ManyToOne
+    @JoinColumn(name = "field_id")
+    private FieldEntity fieldEntity;
 }

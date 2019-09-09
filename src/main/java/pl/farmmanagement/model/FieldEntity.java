@@ -19,13 +19,17 @@ public class FieldEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(unique = true,nullable = false)
+    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
     private double area;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "id",
-    cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "fieldEntity",
+    cascade = CascadeType.ALL)
     private List<FieldOperationEntity> operationsList;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 }
