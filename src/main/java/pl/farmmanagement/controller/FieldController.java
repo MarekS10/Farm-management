@@ -36,6 +36,7 @@ public class FieldController {
         return "newField-form";
     }
 
+    @PostMapping("/newField")
     public String saveField(@ModelAttribute("newField") @Valid FieldDTO field,
                             BindingResult bindingResult,
                             HttpServletResponse response,
