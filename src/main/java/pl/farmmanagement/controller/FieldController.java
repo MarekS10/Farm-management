@@ -8,8 +8,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import pl.farmmanagement.model.FieldDTO;
+import pl.farmmanagement.model.User;
+import pl.farmmanagement.model.UserEntity;
 import pl.farmmanagement.service.FieldService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -33,15 +36,19 @@ public class FieldController {
         return "newField-form";
     }
 
-    @PostMapping("/newField")
     public String saveField(@ModelAttribute("newField") @Valid FieldDTO field,
-                            BindingResult bindingResult, HttpServletResponse httpServletResponse) {
+                            BindingResult bindingResult,
+                            HttpServletResponse response,
+                            HttpServletRequest request) {
+
         if (bindingResult.hasErrors()) {
-            httpServletResponse.setStatus(HttpServletResponse.SC_CONFLICT);
+            response.setStatus(HttpServletResponse.SC_CONFLICT);
             return "newField-form";
         } else {
+            Long userId = (Long) request.getSession().getAttribute("userId");
+            UserEntity fieldOwner = fieldService.findFieldOwner(userId);
+            field.setUserEntity(fieldOwner);
             fieldService.addField(field);
-            httpServletResponse.setStatus(HttpServletResponse.SC_CREATED);
             return "redirect:/user";
         }
     }
