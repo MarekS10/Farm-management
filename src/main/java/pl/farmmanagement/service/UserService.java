@@ -4,9 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import pl.farmmanagement.model.FieldEntity;
 import pl.farmmanagement.model.User;
 import pl.farmmanagement.model.UserEntity;
 import pl.farmmanagement.repository.UserRepository;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +31,17 @@ public class UserService {
     return mapToUserDTO(byUserName);
   }
 
+  public Optional<User> getByUserNameAndPassword(String userName, String password){
+    Optional<UserEntity> byUserNameAndPassword = userRepository.findByUserNameIgnoreCaseAndPassword(userName, password);
+    return byUserNameAndPassword.map(this::mapToUserDTO);
+  }
+
+  public List<FieldEntity> getAllUserFieldById(Long userId){
+    return userRepository.userFieldsById(userId);
+  }
+
+
+
   private UserEntity maptoUser(User a) {
     return UserEntity.builder()
         .id(a.getId())
@@ -40,7 +55,7 @@ public class UserService {
 
   private User mapToUserDTO(UserEntity a) {
     return User.builder()
-
+        .id(a.getId())
         .userName(a.getUserName())
         .password(a.getPassword())
         .eMail(a.getEMail())
