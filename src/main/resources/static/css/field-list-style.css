@@ -1,0 +1,21 @@
+h2, tr{
+    text-align: center;
+}
+
+#container{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    width: 700px;
+}
+
+#searchingFields{
+    float: right;
+}
+
+#firstName, #lastName, #email{
+}
+
+.error{
+    color: red;
+}

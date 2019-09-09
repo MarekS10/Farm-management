@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -18,18 +19,14 @@ public class UserEntity {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
-  @Column(unique = true, nullable = false, updatable = false)
   private String userName;
-
-  @Column(nullable = false)
   private String password;
-
-  @Column(unique = true, nullable = false)
   private String eMail;
-
-  @Column(nullable = false)
   private String givenName;
-
-  @Column(nullable = false)
   private String surname;
+
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",
+          cascade = CascadeType.ALL)
+  private List<FieldEntity> userFields;
+
 }
