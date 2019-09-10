@@ -10,7 +10,7 @@
 </head>
 <body>
 <div id="container">
-    <h2>Add new field</h2>
+    <h2 th:text="${session.updateOrAdd}+' field'">></h2>
 
     <form action="#" th:action="@{/user/newField}" th:object="${newField}" method="post">
 
@@ -38,7 +38,7 @@
                 </td>
             </tr>
         </table>
-        <button class="btn btn-primary" type="submit">Save</button>
+        <button class="btn btn-primary" type="submit" th:text="${session.updateOrAdd}"></button>
         <div><a href="/user">Cancel</a> </div>
     </form>
 </div>
