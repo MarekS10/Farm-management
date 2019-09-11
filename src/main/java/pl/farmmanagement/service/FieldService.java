@@ -34,6 +34,10 @@ public class FieldService {
         return mapToFieldDTO(field);
     }
 
+    public void deleteField(Long id){
+        fieldRepository.deleteById(id);
+    }
+
     private FieldEntity mapToFieldEntity(FieldDTO dto) {
         return FieldEntity
                 .builder()

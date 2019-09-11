@@ -55,6 +55,12 @@ public class FieldController {
         }
     }
 
+    @GetMapping("/delete")
+    public String deleteField(@RequestParam("id") Long id){
+        fieldService.deleteField(id);
+        return "redirect:/user";
+    }
+
     @GetMapping("/updateField")
     public String updateField(@RequestParam("id") Long id, Model model, HttpServletRequest request){
         FieldDTO updatedField = fieldService.findFieldById(id);
