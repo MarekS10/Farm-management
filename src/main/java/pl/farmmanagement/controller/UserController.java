@@ -15,6 +15,7 @@ import pl.farmmanagement.model.User;
 import pl.farmmanagement.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
@@ -30,7 +31,7 @@ public class UserController {
         webDataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
-    @GetMapping(value = "/singup")
+    @GetMapping(value = "/signUp")
     public String showForm(Model model) {
         model.addAttribute("user", new User());
         return "newUser-form";
@@ -44,9 +45,11 @@ public class UserController {
         return "home";
     }
 
-    @PostMapping(value = "/singup")
-    public String processForm(@Valid @ModelAttribute("user") User user, BindingResult result) {
+    @PostMapping(value = "/signUp")
+    public String processForm(@Valid @ModelAttribute("user") User user,
+                              BindingResult result, HttpServletResponse response) {
         if (result.hasErrors()) {
+            response.setStatus(HttpServletResponse.SC_CONFLICT);
             return "newUser-form";
         } else {
             userService.add(user);

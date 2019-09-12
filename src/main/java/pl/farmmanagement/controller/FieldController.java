@@ -8,7 +8,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import pl.farmmanagement.model.FieldDTO;
-import pl.farmmanagement.model.FieldEntity;
 import pl.farmmanagement.model.UserEntity;
 import pl.farmmanagement.service.FieldService;
 
