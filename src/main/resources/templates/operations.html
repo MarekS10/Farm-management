@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Operations</title>
+    <link rel="stylesheet" type="text/css" href="/css/field-list-style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+<div id="container">
+    <p th:text="'User: '+${session.userName}"></p>
+    <h2>Operations list</h2>
+    <hr>
+
+    <div id="content">
+        <input type="button" value="Add Operation"
+               onclick="window.location.href='/user/operations/new'; return false;"
+               class="add-button"
+        />
+        <input type="text" id="searchingFields" onkeyup="myFunction()"
+               placeholder="Search for operation.." title="Type in a field name">
+    </div>
+
+    <table id="operationTable" class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th>Operation name</th>
+            <th>isDone</th>
+            <th>Date</th>
+            <th>Actions</th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="tempOperation : ${operations}">
+            <td th:text="${tempOperation.getTask()}"/>
+            <td th:text="${tempOperation.isDone()}"/>
+            <td th:text="${tempOperation.getOperationDate()}"/>
+            <td>
+                <a th:href="@{/user/updateFieldData(id=${tempOperation.getId()})}">Update</a>
+                |
+                <a th:href="@{/user/delete(id=${tempOperation.getId()})}"
+                   onclick="if (!(confirm('Are you sure you want to delete this operation?'))) return false">
+                    Delete
+                </a>
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
+<script src="/js/fieldSearcher.js"></script>
+
+</body>
+</html>
