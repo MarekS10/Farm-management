@@ -8,7 +8,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import pl.farmmanagement.model.FieldDTO;
-import pl.farmmanagement.model.FieldEntity;
 import pl.farmmanagement.model.UserEntity;
 import pl.farmmanagement.service.FieldService;
 
@@ -53,6 +52,12 @@ public class FieldController {
             fieldService.addField(field);
             return "redirect:/user";
         }
+    }
+
+    @GetMapping("/delete")
+    public String deleteField(@RequestParam("id") Long id){
+        fieldService.deleteField(id);
+        return "redirect:/user";
     }
 
     @GetMapping("/updateField")
