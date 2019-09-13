@@ -21,9 +21,9 @@ public class UserService {
 
   public User add(User user) {
     UserEntity entity = maptoUser(user);
-    userRepository.save(entity);
+    UserEntity savedUser = userRepository.save(entity);
     logger.info("User {} with id: {} has been added to database", user.getUserName(), user.getId());
-    return mapToUserDTO(entity);
+    return mapToUserDTO(savedUser);
   }
 
   public User getByUserName(String userName){
