@@ -8,7 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import pl.farmmanagement.model.FieldDTO;
-import pl.farmmanagement.model.User;
+import pl.farmmanagement.model.FieldEntity;
 import pl.farmmanagement.model.UserEntity;
 import pl.farmmanagement.service.FieldService;
 
@@ -30,8 +30,9 @@ public class FieldController {
     }
 
     @GetMapping("/newField")
-    public String showFormForAddField(Model theModel) {
+    public String showFormForAddField(Model theModel, HttpServletRequest request) {
         FieldDTO newField = new FieldDTO();
+        request.getSession().setAttribute("updateOrAdd","Add");
         theModel.addAttribute("newField", newField);
         return "newField-form";
     }
@@ -52,6 +53,14 @@ public class FieldController {
             fieldService.addField(field);
             return "redirect:/user";
         }
+    }
+
+    @GetMapping("/updateField")
+    public String updateField(@RequestParam("id") Long id, Model model, HttpServletRequest request){
+        FieldDTO updatedField = fieldService.findFieldById(id);
+        request.getSession().setAttribute("updateOrAdd","Update");
+        model.addAttribute("newField",updatedField);
+        return "newField-form";
     }
 
 }
