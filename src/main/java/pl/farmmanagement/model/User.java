@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.UniqueElements;
+import pl.farmmanagement.helper.UniqueUserName;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -20,6 +21,7 @@ public class User {
 
   @NotNull(message = "Required")
   @Size(min = 3, message = "Minimum 3 characters")
+  @UniqueUserName
   private String userName;
 
   @Pattern(
