@@ -19,6 +19,7 @@ public class FieldOperation {
   private Long id;
 
   @DateTimeFormat(pattern = "yyyy-MM-dd")
+  @NotNull(message = "Required")
   private LocalDate operationDate;
 
   @NotNull(message = "Required")

@@ -51,7 +51,7 @@ public class UserRepositoryTest {
 
         testEntityManager.persistAndFlush(userEntity);
 
-        UserEntity foundUser = repository.findByUserName("Root12");
+        UserEntity foundUser = repository.findByUserNameIgnoreCase("Root12");
 
         assertEquals(userEntity, foundUser);
 
