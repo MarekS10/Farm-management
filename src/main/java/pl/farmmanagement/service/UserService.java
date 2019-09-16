@@ -38,7 +38,7 @@ public class UserService {
   }
 
   public User getByUserName(String userName){
-    UserEntity byUserName = userRepository.findByUserName(userName);
+    UserEntity byUserName = userRepository.findByUserNameIgnoreCase(userName);
     return mapToUserDTO(byUserName);
   }
 

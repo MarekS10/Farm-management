@@ -40,9 +40,9 @@
             <td th:text="${tempOperation.isDone()}"/>
             <td th:text="${tempOperation.getOperationDate()}"/>
             <td>
-                <a th:href="@{/user/updateFieldData(id=${tempOperation.getId()})}">Update</a>
+                <a th:href="@{/user/operations/updateOperation(id=${tempOperation.getId()})}">Update</a>
                 |
-                <a th:href="@{/user/delete(id=${tempOperation.getId()})}"
+                <a th:href="@{/user/operations/delete(id=${tempOperation.getId()})}"
                    onclick="if (!(confirm('Are you sure you want to delete this operation?'))) return false">
                     Delete
                 </a>

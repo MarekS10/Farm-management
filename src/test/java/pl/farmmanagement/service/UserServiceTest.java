@@ -13,7 +13,6 @@ import pl.farmmanagement.model.User;
 import pl.farmmanagement.model.UserEntity;
 import pl.farmmanagement.repository.UserRepository;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -72,7 +71,7 @@ public class UserServiceTest {
     @Test
     public void whenGetByUserName_thenReturnsSearchedUser(){
         String userName = "root12";
-        Mockito.when(userRepository.findByUserName(userName)).thenReturn(userEntity);
+        Mockito.when(userRepository.findByUserNameIgnoreCase(userName)).thenReturn(userEntity);
 
         User returnedUser = userService.getByUserName(userName);
 

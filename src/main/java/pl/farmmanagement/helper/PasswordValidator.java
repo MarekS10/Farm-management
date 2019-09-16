@@ -13,7 +13,12 @@ public class PasswordValidator implements ConstraintValidator<PasswordValid, Use
     }
 
     @Override
-    public boolean isValid(User value, ConstraintValidatorContext context) {
-        return value.getPassword().equals(value.getRePassword());
+    public boolean isValid(User user, ConstraintValidatorContext context) {
+        String thePassword = user.getPassword();
+        if (thePassword != null) {
+            return user.getPassword().equals(user.getRePassword());
+        } else {
+            return false;
+        }
     }
 }
