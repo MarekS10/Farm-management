@@ -9,6 +9,7 @@ import pl.farmmanagement.repository.FieldOperationRepository;
 import pl.farmmanagement.repository.FieldRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,18 +21,32 @@ public class FieldOperationService {
   public FieldOperation addFieldOperation(FieldOperation fieldOperation) {
     FieldOperationEntity fieldOperationEntity = mapToFieldOperationEntity(fieldOperation);
     fieldOperationRepository.save(fieldOperationEntity);
-    return maptoFieldOperation(fieldOperationEntity);
+    return mapToFieldOperation(fieldOperationEntity);
   }
 
   public List<FieldOperationEntity> findAllOperationsByField(Long id) {
-    return fieldOperationRepository.findAllByFieldEntity_Id(id);
+    return fieldOperationRepository.findAllByFieldEntityId(id);
+  }
+
+  public Optional<FieldOperation> findOperationById(Long id){
+    Optional<FieldOperationEntity> foundFieldOperation = fieldOperationRepository.findById(id);
+    if (foundFieldOperation.isPresent()){
+      FieldOperation fieldOperation = mapToFieldOperation(foundFieldOperation.get());
+      return Optional.of(fieldOperation);
+    }else {
+      return Optional.empty();
+    }
+  }
+
+  public void deleteById(Long id){
+    fieldOperationRepository.deleteById(id);
   }
 
   public FieldEntity findFieldById(Long id) {
     return fieldRepository.findById(id).get();
   }
 
-  private FieldOperation maptoFieldOperation(FieldOperationEntity field) {
+  private FieldOperation mapToFieldOperation(FieldOperationEntity field) {
     return FieldOperation.builder()
         .id(field.getId())
         .task(field.getTask())

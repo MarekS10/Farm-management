@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface FieldOperationRepository extends JpaRepository<FieldOperationEntity, Long> {
 
-  List<FieldOperationEntity> findAllByFieldEntity_Id(Long id);
+  List<FieldOperationEntity> findAllByFieldEntityId(Long id);
 }
