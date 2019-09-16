@@ -29,9 +29,19 @@ public class FieldService {
         return user.get();
     }
 
+    public FieldDTO findFieldById(Long id){
+        FieldEntity field = fieldRepository.findById(id).get();
+        return mapToFieldDTO(field);
+    }
+
+    public void deleteField(Long id){
+        fieldRepository.deleteById(id);
+    }
+
     private FieldEntity mapToFieldEntity(FieldDTO dto) {
         return FieldEntity
                 .builder()
+                .id(dto.getId())
                 .name(dto.getName())
                 .area(dto.getArea())
                 .operationsList(dto.getOperationsList())

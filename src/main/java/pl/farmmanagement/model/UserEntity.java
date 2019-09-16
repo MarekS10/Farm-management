@@ -1,18 +1,17 @@
 package pl.farmmanagement.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class UserEntity {
 
   @Id
@@ -28,5 +27,8 @@ public class UserEntity {
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",
           cascade = CascadeType.ALL)
   private List<FieldEntity> userFields;
+
+  @ManyToMany(fetch = FetchType.EAGER)
+  private Set<UserRole> roles;
 
 }

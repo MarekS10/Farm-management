@@ -9,7 +9,7 @@
 </head>
 <body>
 <div id="container">
-<form action="#" th:action="@{/singup}" th:object = "${user}" method="post">
+<form action="#" th:action="@{/signUp}" th:object = "${user}" method="post">
 
     <h2>User Registration</h2>
     <table class="table">
@@ -30,6 +30,16 @@
                 <p th:if="${#fields.hasErrors('password')}"
                    th:errors="*{password}"
                    class="error">Password error</p>
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label th:for="RePassword">Re-password</label>
+                <input type="password" th:id="rePassword" th:field="*{rePassword}">
+                <p th:if="${#fields.hasErrors('global')}"
+                   th:errors="*{global}"
+                   class="error">Re-password error</p>
                 </p>
             </td>
         </tr>
