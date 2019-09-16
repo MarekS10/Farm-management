@@ -3,6 +3,7 @@ package pl.farmmanagement.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -29,10 +30,10 @@ public class SecurityUserDetailsService implements UserDetailsService {
                     + login + " not found");
         }
 
-        return new CustomUserDetails(user.getUserName(), user.getPassword(), mapRoles(user), user.getGivenName(), user.getSurname());
+        return new User(user.getUserName(), user.getPassword(), mapRoles(user));
     }
 
     private List<GrantedAuthority> mapRoles(UserEntity user) {
-    return user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getRole())).collect(Collectors.toList());
+    return user.getRoles().stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRole())).collect(Collectors.toList());
     }
 }

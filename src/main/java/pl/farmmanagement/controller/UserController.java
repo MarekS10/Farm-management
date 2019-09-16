@@ -2,6 +2,7 @@ package pl.farmmanagement.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -62,21 +63,7 @@ public class UserController {
         }
     }
 
-    @PostMapping(value = "/user")
-    public String processLogin(@ModelAttribute("user") User user, HttpServletRequest request) {
-        String userName = user.getUserName();
-        String userPassword = user.getPassword();
-
-        Optional<User> logInUser = userService.getByUserNameAndPassword(userName, userPassword);
-        if (logInUser.isPresent()){
-            request.getSession().setAttribute("userId",logInUser.get().getId());
-            request.getSession().setAttribute("userName",logInUser.get().getUserName());
-            return "redirect:/user";
-        }else
-            request.getSession().setAttribute("logError","logError");
-            return "redirect:/home";
-        }
-
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/user")
     public String userHomePage(HttpServletRequest request, Model model){
         Long userId = (Long) request.getSession().getAttribute("userId");
