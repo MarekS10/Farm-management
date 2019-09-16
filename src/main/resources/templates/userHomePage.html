@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>User home page</title>
@@ -10,7 +10,8 @@
 
 <body>
 <div id="container">
-    <p th:text="'User: '+${session.userName}"></p>
+    Zalogowany jako: <span sec:authentication="name"></span> |
+    Rola: <span sec:authentication="principal.authorities"></span>
     <h2>Fields list</h2>
     <hr>
 
