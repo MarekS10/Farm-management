@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
-    UserEntity findByUserName(String name);
+    UserEntity findByUserNameIgnoreCase(String name);
     Optional<UserEntity> findByUserNameIgnoreCaseAndPassword(String userName, String password);
 
     @Query("SELECT userFields from UserEntity u where u.id=?1")
