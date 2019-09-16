@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 import pl.farmmanagement.model.FieldEntity;
 import pl.farmmanagement.model.User;
+import pl.farmmanagement.security.SecurityConfig;
 import pl.farmmanagement.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +27,7 @@ import java.util.Optional;
 public class UserController {
     private final UserService userService;
 
+
     @InitBinder
     public void initBinder(WebDataBinder webDataBinder) {
         StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
@@ -32,17 +35,19 @@ public class UserController {
     }
 
     @GetMapping(value = "/signUp")
-    public String showForm(Model model) {
+    public ModelAndView showForm(Model model) {
+        ModelAndView modelAndView = new ModelAndView("newUser-form.html");
         model.addAttribute("user", new User());
-        return "newUser-form";
+        return modelAndView;
 
     }
 
 
     @GetMapping(value = {"/", "/home"})
-    public String showHome(Model model) {
+    public ModelAndView showHome(Model model) {
+        ModelAndView modelAndView = new ModelAndView("home.html");
         model.addAttribute("user",new User());
-        return "home";
+        return modelAndView;
     }
 
     @PostMapping(value = "/signUp")

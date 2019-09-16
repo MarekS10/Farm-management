@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -26,5 +27,8 @@ public class UserEntity {
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",
           cascade = CascadeType.ALL)
   private List<FieldEntity> userFields;
+
+  @ManyToMany(fetch = FetchType.EAGER)
+  private Set<UserRole> roles;
 
 }
