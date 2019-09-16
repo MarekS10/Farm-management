@@ -23,7 +23,7 @@ public class SecurityUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        UserEntity user = userRepository.findByUserName(login);
+        UserEntity user = userRepository.findByUserNameIgnoreCase(login);
 
         if(user==null){
             throw  new UsernameNotFoundException("Username with login "
