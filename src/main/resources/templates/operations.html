@@ -11,6 +11,9 @@
 <body>
 <div id="container">
     User: <span sec:authentication="name"></span>
+    <form th:action="@{/user}" method="get" id="backOption">
+        <input type="submit" value="Back">
+    </form>
     <h2>Operations list</h2>
     <hr>
 
