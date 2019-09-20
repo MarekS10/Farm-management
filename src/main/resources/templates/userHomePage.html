@@ -12,7 +12,7 @@
 <div id="container">
     User: <span sec:authentication="name"></span>
 
-    <form th:action="@{/logout}" method="post" id="signOut">
+    <form th:action="@{/logout}" method="post" id="backOption">
         <input type="submit" value="Sign Out">
     </form>
 
@@ -42,7 +42,7 @@
             <td th:text="${tempField.getName()}"/>
             <td th:text="${tempField.getArea()}"/>
                         <td>
-                            <a th:href="@{/user/operations(id=${tempField.getId()})}">Operations</a>
+                            <a th:href="@{/user/operations(id=${tempField.getId()},fieldName=${tempField.getName()})}">Operations</a>
                             |
                             <a th:href="@{/user/updateField(id=${tempField.getId()})}">Update</a>
                             |

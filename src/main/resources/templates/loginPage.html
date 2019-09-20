@@ -6,12 +6,12 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/css/field-list-style.css">
-    <link rel="stylesheet" type="text/css" href="/css/error-style.css">
 </head>
 <body>
 <form  th:action="@{/}" method="post" id="container">
     <h2>Login</h2>
-    <p id="logErrorMessage" class="error" th:if="${param.error}">Incorrect login or password</p>
+    <p id="logMessage" class="error" th:if="${param.error}">Incorrect login or password</p>
+    <p id="logOutMessage" th:if="${param.logout}">You have been logged out</p>
 
     <table class="table">
         <tr>
