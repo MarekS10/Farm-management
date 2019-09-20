@@ -2,6 +2,10 @@ h2, tr{
     text-align: center;
 }
 
+.error{
+    color: red;
+}
+
 #container{
     margin-left: auto;
     margin-right: auto;
@@ -16,10 +20,14 @@ h2, tr{
 #firstName, #lastName, #email{
 }
 
-.error{
-    color: red;
-}
-
 #backOption{
     text-align: right;
+}
+
+#logMessage{
+    text-align: center;
+}
+
+#logOutMessage {
+    text-align: center;
 }
