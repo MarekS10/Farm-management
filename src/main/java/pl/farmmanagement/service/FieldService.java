@@ -1,7 +1,6 @@
 package pl.farmmanagement.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.farmmanagement.model.FieldDTO;
 import pl.farmmanagement.model.FieldEntity;

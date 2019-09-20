@@ -12,7 +12,7 @@
 <div id="container">
     <h2 th:text="${session.updateOrAdd}+' field'"></h2>
 
-    <form action="#" th:action="@{/user/newField}" th:object="${newField}" method="post">
+    <form th:action="@{/user/newField}" th:object="${newField}" method="post">
 
         <input type="hidden" th:field="*{id}">
 

@@ -10,11 +10,14 @@
 
 <body>
 <div id="container">
-    Zalogowany jako: <span sec:authentication="name"></span> |
-    Rola: <span sec:authentication="principal.authorities"></span>
+    User: <span sec:authentication="name"></span>
+
+    <form th:action="@{/logout}" method="post" id="signOut">
+        <input type="submit" value="Sign Out">
+    </form>
+
     <h2>Fields list</h2>
     <hr>
-
     <div id="content">
         <input type="button" value="Add field"
                onclick="window.location.href='/user/newField'; return false;"

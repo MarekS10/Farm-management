@@ -2,6 +2,8 @@ package pl.farmmanagement.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import pl.farmmanagement.model.FieldDTO;
 import pl.farmmanagement.model.UserEntity;
+import pl.farmmanagement.security.LoggedUserDetails;
 import pl.farmmanagement.service.FieldService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,43 +31,46 @@ public class FieldController {
         webDataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/newField")
     public String showFormForAddField(Model theModel, HttpServletRequest request) {
         FieldDTO newField = new FieldDTO();
-        request.getSession().setAttribute("updateOrAdd","Add");
+        request.getSession().setAttribute("updateOrAdd", "Add");
         theModel.addAttribute("newField", newField);
         return "newField-form";
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/newField")
-    public String saveField(@ModelAttribute("newField") @Valid FieldDTO field,
+    public String saveField(@AuthenticationPrincipal LoggedUserDetails userDetails,
+                            @ModelAttribute("newField") @Valid FieldDTO field,
                             BindingResult bindingResult,
-                            HttpServletResponse response,
-                            HttpServletRequest request) {
+                            HttpServletResponse response) {
 
         if (bindingResult.hasErrors()) {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
             return "newField-form";
         } else {
-            Long userId = (Long) request.getSession().getAttribute("userId");
-            UserEntity fieldOwner = fieldService.findFieldOwner(userId);
+            UserEntity fieldOwner = fieldService.findFieldOwner(userDetails.getId());
             field.setUserEntity(fieldOwner);
             fieldService.addField(field);
             return "redirect:/user";
         }
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/delete")
-    public String deleteField(@RequestParam("id") Long id){
+    public String deleteField(@RequestParam("id") Long id) {
         fieldService.deleteField(id);
         return "redirect:/user";
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/updateField")
-    public String updateField(@RequestParam("id") Long id, Model model, HttpServletRequest request){
+    public String updateField(@RequestParam("id") Long id, Model model, HttpServletRequest request) {
         FieldDTO updatedField = fieldService.findFieldById(id);
-        request.getSession().setAttribute("updateOrAdd","Update");
-        model.addAttribute("newField",updatedField);
+        request.getSession().setAttribute("updateOrAdd", "Update");
+        model.addAttribute("newField", updatedField);
         return "newField-form";
     }
 

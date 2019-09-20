@@ -1,21 +1,36 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en"  xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Login Page</title>
+    <title>Log in</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/field-list-style.css">
+    <link rel="stylesheet" type="text/css" href="/css/error-style.css">
 </head>
 <body>
+<form  th:action="@{/}" method="post" id="container">
+    <h2>Login</h2>
+    <p id="logErrorMessage" class="error" th:if="${param.error}">Incorrect login or password</p>
 
-
-<form th:action="@{/auth}" method="POST" >
-    <table>
-        <tr><td>Login:</td><td><input type="text" id="username" name="username"/></td></tr>
-        <tr><td>Password:</td><td><input type="text" id="password" name="password"/></td></tr>
-
-        <tr><td></td><td> <button type="submit">Zaloguj</button></td></tr>
-        <tr><td></td><td><a href="/signUp"><button type="button">Zarejestruj</button> </a></td></tr>
+    <table class="table">
+        <tr>
+            <td>
+                <label th:for="username">User name:</label>
+                <input type="text" id="username" name="username" >
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label th:for="password">Password</label>
+                <input type="password" id="password" name="password" >
+                </p>
+            </td>
+        </tr>
     </table>
+    <button class="btn btn-primary" type="submit">Log in</button>
+    <div><a href="/signUp">Sign up</a> </div>
 </form>
-
 </body>
 </html>
