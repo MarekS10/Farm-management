@@ -13,6 +13,7 @@ import pl.farmmanagement.security.SecurityConfig;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +31,14 @@ public class UserService {
         UserEntity savedUser = userRepository.save(entity);
         logger.info("User {} with id: {} has been added to database", user.getUserName(), user.getId());
         return mapToUserDTO(savedUser);
+    }
+
+    public List<User> findAll(){
+        return userRepository.findAll().stream().map(this::mapToUserDTO).collect(Collectors.toList());
+    }
+
+    public void delete(Long id){
+        userRepository.deleteById(id);
     }
 
     public User getByUserName(String userName) {

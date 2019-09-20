@@ -66,4 +66,20 @@ public class UserController {
         model.addAttribute("fields", allUserField);
         return "userHomePage";
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/admin")
+    public ModelAndView adminPage(){
+        List<User> userList = userService.findAll();
+        ModelAndView modelAndView = new ModelAndView("adminPage.html");
+        modelAndView.addObject("users",userList);
+        return modelAndView;
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/admin/delete")
+    public String deleteField(@RequestParam("id") Long id) {
+        userService.delete(id);
+        return "redirect:/admin";
+    }
 }
