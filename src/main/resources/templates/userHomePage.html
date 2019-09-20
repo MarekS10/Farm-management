@@ -42,7 +42,7 @@
             <td th:text="${tempField.getName()}"/>
             <td th:text="${tempField.getArea()}"/>
                         <td>
-                            <a th:href="@{/user/operations(id=${tempField.getId()})}">Operations</a>
+                            <a th:href="@{/user/operations(id=${tempField.getId()},fieldName=${tempField.getName()})}">Operations</a>
                             |
                             <a th:href="@{/user/updateField(id=${tempField.getId()})}">Update</a>
                             |

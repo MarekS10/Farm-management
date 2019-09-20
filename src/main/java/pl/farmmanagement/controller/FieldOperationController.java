@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import pl.farmmanagement.model.FieldDTO;
 import pl.farmmanagement.model.FieldEntity;
 import pl.farmmanagement.model.FieldOperation;
 import pl.farmmanagement.model.FieldOperationEntity;
@@ -34,8 +35,13 @@ public class FieldOperationController {
 
     @PreAuthorize("hasRole('USER')")
     @GetMapping
-    public String operations(@RequestParam("id") Long id, Model model, HttpServletRequest request) {
+    public String operations(@RequestParam("id") Long id,
+                             @RequestParam(value = "fieldName") String fieldName,
+                             Model model,
+                             HttpServletRequest request) {
+
         request.getSession().setAttribute("fieldId", id);
+        request.getSession().setAttribute("fieldName", fieldName);
         List<FieldOperationEntity> allFieldOperations =
                 fieldOperationService.findAllOperationsByField(id);
         model.addAttribute("operations", allFieldOperations);
@@ -66,7 +72,8 @@ public class FieldOperationController {
             FieldEntity field = fieldOperationService.findFieldById(fieldId);
             newOperation.setFieldEntity(field);
             fieldOperationService.addFieldOperation(newOperation);
-            return "redirect:/user/operations?id=" + field.getId();
+            return String.format("redirect:/user/operations?id=%d&fieldName=%s",
+                    field.getId(), field.getName());
         }
     }
 
@@ -86,9 +93,11 @@ public class FieldOperationController {
     }
 
     @GetMapping("/delete")
-    public String deleteById(@RequestParam Long id, HttpServletRequest request) {
+    public String deleteById(@RequestParam Long id,
+                             HttpServletRequest request) {
         Long fieldId = (Long) request.getSession().getAttribute("fieldId");
+        String fieldName = (String) request.getSession().getAttribute("fieldName");
         fieldOperationService.deleteById(id);
-        return "redirect:/user/operations?id=" + fieldId;
+        return String.format("redirect:/user/operations?id=%d&fieldName=%s", fieldId,fieldName);
     }
 }
