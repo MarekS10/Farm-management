@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Operations</title>
@@ -10,7 +10,7 @@
 
 <body>
 <div id="container">
-    <p th:text="'User: '+${session.userName}"></p>
+    User: <span sec:authentication="name"></span>
     <h2>Operations list</h2>
     <hr>
 
@@ -23,7 +23,7 @@
                placeholder="Search for operation.." title="Type in a field name">
     </div>
 
-    <table id="operationTable" class="table">
+    <table id="listTable" class="table">
         <thead class="thead-dark">
         <tr>
             <th>Operation name</th>

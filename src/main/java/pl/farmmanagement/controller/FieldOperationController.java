@@ -2,6 +2,7 @@ package pl.farmmanagement.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,6 +32,7 @@ public class FieldOperationController {
         webDataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping
     public String operations(@RequestParam("id") Long id, Model model, HttpServletRequest request) {
         request.getSession().setAttribute("fieldId", id);
@@ -40,19 +42,22 @@ public class FieldOperationController {
         return "operations";
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping(value = "/new")
     public String newOperation(Model model, HttpServletRequest request) {
-        model.addAttribute("operation", new FieldOperation());
+        FieldOperation fieldOperation = new FieldOperation();
         request.getSession().setAttribute("addOrUpdateOperation", "Add");
+        model.addAttribute("operation", fieldOperation);
         return "operation-form";
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping(value = "/new")
-    public String processForm(
-            @Valid @ModelAttribute("newOperation") FieldOperation newOperation,
-            BindingResult result,
-            HttpServletRequest request,
-            HttpServletResponse response) {
+    public String processForm(@ModelAttribute("operation") @Valid FieldOperation newOperation,
+                              BindingResult result,
+                              HttpServletRequest request,
+                              HttpServletResponse response) {
+
         if (result.hasErrors()) {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
             return "operation-form";
@@ -61,8 +66,7 @@ public class FieldOperationController {
             FieldEntity field = fieldOperationService.findFieldById(fieldId);
             newOperation.setFieldEntity(field);
             fieldOperationService.addFieldOperation(newOperation);
-            Long id = field.getId();
-            return "redirect:/user/operations?id=" + id;
+            return "redirect:/user/operations?id=" + field.getId();
         }
     }
 
@@ -72,6 +76,7 @@ public class FieldOperationController {
         FieldOperation fieldOperation;
         if (theOperation.isPresent()) {
             fieldOperation = theOperation.get();
+
         } else {
             fieldOperation = new FieldOperation();
         }

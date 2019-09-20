@@ -19,3 +19,7 @@ h2, tr{
 .error{
     color: red;
 }
+
+#signOut{
+    text-align: right;
+}
