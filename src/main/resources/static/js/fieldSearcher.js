@@ -17,3 +17,7 @@ function myFunction() {
         }
     }
 }
+
+function imageFunction() {
+    document.getElementById("image").style.cursor = "pointer";
+}

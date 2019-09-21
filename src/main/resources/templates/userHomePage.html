@@ -10,9 +10,12 @@
 
 <body>
 <div id="container">
+    <div>
     User: <span sec:authentication="name"></span>
-
-    <form th:action="@{/logout}" method="post" id="backOption">
+    <img class="image" id="image"   th:src="@{image/profile.png}" align="right"
+         onclick="window.location.href='/userUpdate'" onmouseenter="imageFunction()">
+    </div>
+    <form th:action="@{/logout}" method="post">
         <input type="submit" value="Sign Out">
     </form>
 

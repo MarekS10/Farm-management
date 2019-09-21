@@ -12,6 +12,10 @@ h2, h6, tr,td{
     max-height: 30px;
     overflow-wrap: break-word;
 }
+.image{
+    width: 60px;
+    height: 60px;
+}
 
 #container{
     margin-left: auto;
@@ -25,10 +29,6 @@ h2, h6, tr,td{
 }
 
 #firstName, #lastName, #email{
-}
-
-#backOption{
-    text-align: right;
 }
 
 #logMessage{
