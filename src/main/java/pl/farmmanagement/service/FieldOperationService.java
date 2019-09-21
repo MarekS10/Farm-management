@@ -2,7 +2,6 @@ package pl.farmmanagement.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.farmmanagement.model.FieldEntity;
 import pl.farmmanagement.model.FieldOperation;
 import pl.farmmanagement.model.FieldOperationEntity;
 import pl.farmmanagement.repository.FieldOperationRepository;
@@ -28,7 +27,7 @@ public class FieldOperationService {
     }
 
     public List<FieldOperationEntity> findAllOperationsByField(Long id) {
-        return fieldOperationRepository.findAllByFieldEntityId(id);
+        return fieldOperationRepository.findAllByFieldEntityIdOrderByOperationDate(id);
     }
 
     public Optional<FieldOperation> findOperationById(Long id) {
