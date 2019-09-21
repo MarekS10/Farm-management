@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.farmmanagement.model.FieldEntity;
 import pl.farmmanagement.model.User;
+import pl.farmmanagement.model.UserEntity;
 import pl.farmmanagement.security.LoggedUserDetails;
 import pl.farmmanagement.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
@@ -41,7 +43,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ModelAndView loginPage(@RequestParam(required = false) String error) {
+    public ModelAndView loginPage(@RequestParam(required = false) String error, HttpServletRequest httpServletRequest) {
         ModelAndView modelAndView = new ModelAndView("loginPage.html");
         modelAndView.addObject("error", error);
         return modelAndView;
@@ -65,5 +67,21 @@ public class UserController {
         List<FieldEntity> allUserField = userService.getAllUserFieldById(userDetails.getId());
         model.addAttribute("fields", allUserField);
         return "userHomePage";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/admin")
+    public ModelAndView adminPage(){
+        List<User> userList = userService.findAll();
+        ModelAndView modelAndView = new ModelAndView("adminPage.html");
+        modelAndView.addObject("users",userList);
+        return modelAndView;
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/admin/delete")
+    public String deleteField(@RequestParam("id") Long id) {
+        userService.delete(id);
+        return "redirect:/admin";
     }
 }
