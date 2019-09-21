@@ -1,5 +1,6 @@
 package pl.farmmanagement.security;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import sun.net.www.protocol.http.AuthenticationHeader;
 
 @Configuration
 @EnableWebSecurity
@@ -24,6 +27,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private SecurityUserDetailsService userDetailsService;
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+
+    private  AuthenticationSuccessHandler authenticationSuccessHandler;
+
+    @Autowired
+    public SecurityConfig(AuthenticationSuccessHandler authenticationSuccessHandler) {
+        this.authenticationSuccessHandler = authenticationSuccessHandler;
+    }
 
     @Bean
     @Primary
@@ -55,8 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/", "/signUp", "/h2/**").permitAll()
                 .and()
-                .formLogin().loginPage("/")
-                .defaultSuccessUrl("/user")
+                .formLogin().loginPage("/").successHandler(authenticationSuccessHandler)
                 .and()
                 .logout()
                 .permitAll()
