@@ -15,7 +15,7 @@
         <input type="submit" value="Back">
     </form>
     <h2>Operations list</h2>
-    <h6 th:text="'Field: '+${session.fieldName}"> </h6>
+    <h6 th:text="'Field: '+${session.fieldName}"></h6>
     <hr>
 
     <div id="content">
@@ -44,13 +44,19 @@
             <td th:text="${tempOperation.isDone()}"/>
             <td th:text="${tempOperation.getOperationDate()}"/>
             <td>
+                <span th:if="${!tempOperation.isDone()}">
                 <a th:href="@{/user/operations/updateOperation(id=${tempOperation.getId()})}">Update</a>
-                |
+                    |
+                </span>
+
                 <a th:href="@{/user/operations/delete(id=${tempOperation.getId()})}"
                    onclick="if (!(confirm('Are you sure you want to delete this operation?'))) return false">
                     Delete
                 </a>
-
+                <span th:if="${!tempOperation.isDone()}">
+                    |
+                <a th:href="@{/user/operations/doneTask(id=${tempOperation.getId()})}">Done</a>
+                </span>
             </td>
         </tr>
         </tbody>
