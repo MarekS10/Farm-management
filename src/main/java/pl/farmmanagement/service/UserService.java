@@ -58,6 +58,11 @@ public class UserService {
     }
 
 
+    public User findById(Long id) {
+        return mapToUserDTO(userRepository.findById(id).get());
+    }
+
+
     private UserEntity maptoUser(User a) {
         return UserEntity.builder()
                 .id(a.getId())

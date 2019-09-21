@@ -68,6 +68,26 @@ public class UserController {
         return "userHomePage";
     }
 
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/userUpdate")
+    public String userUpdate(Model model, @AuthenticationPrincipal LoggedUserDetails userDetails) {
+        User user = userService.findById(userDetails.getId());
+        model.addAttribute("user", user);
+        return "userPage";
+    }
+    @PreAuthorize("hasRole('USER')")
+    @PostMapping(value = "/user/update")
+    public String processUserUpdate( @AuthenticationPrincipal LoggedUserDetails userDetails,@Valid @ModelAttribute("user") User user,
+                              BindingResult result, HttpServletResponse response) {
+        if (result.hasErrors()) {
+            response.setStatus(HttpServletResponse.SC_CONFLICT);
+            return "userPage";
+        } else {
+            userService.add(user);
+            return "redirect:/user";
+        }
+    }
+
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin")
     public ModelAndView adminPage(){
