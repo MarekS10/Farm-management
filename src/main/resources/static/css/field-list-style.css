@@ -1,9 +1,16 @@
-h2, h6, tr{
+h2, h6, tr,td{
     text-align: center;
+    vertical-align: center;
 }
 
 .error{
     color: red;
+}
+
+.textColumn{
+    max-width: 300px;
+    max-height: 30px;
+    overflow-wrap: break-word;
 }
 
 #container{
