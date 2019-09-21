@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.farmmanagement.model.FieldEntity;
 import pl.farmmanagement.model.User;
-import pl.farmmanagement.model.UserEntity;
 import pl.farmmanagement.security.LoggedUserDetails;
 import pl.farmmanagement.service.UserService;
 
@@ -72,7 +71,7 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin")
     public ModelAndView adminPage(){
-        List<User> userList = userService.findAll();
+        List<User> userList = userService.findAllUsers();
         ModelAndView modelAndView = new ModelAndView("adminPage.html");
         modelAndView.addObject("users",userList);
         return modelAndView;

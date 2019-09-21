@@ -33,6 +33,7 @@
             <th>E-mail</th>
             <th>First Name</th>
             <th>Last Name</th>
+            <th>Role</th>
             <th>Actions</th>
 
         </tr>
@@ -44,6 +45,7 @@
             <td th:text="${tempUser.getEMail()}"/>
             <td th:text="${tempUser.getGivenName()}"/>
             <td th:text="${tempUser.getSurname()}"/>
+            <td th:text="${tempUser.getRoles()}"/>
             <td>
                 <a th:href="@{/admin/delete(id=${tempUser.getId()})}"
                    onclick="if (!(confirm('Are you sure you want to delete this user?'))) return false">

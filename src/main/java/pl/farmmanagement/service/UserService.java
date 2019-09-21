@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import pl.farmmanagement.model.FieldEntity;
 import pl.farmmanagement.model.User;
 import pl.farmmanagement.model.UserEntity;
+import pl.farmmanagement.model.UserRole;
 import pl.farmmanagement.repository.RoleRepository;
 import pl.farmmanagement.repository.UserRepository;
 import pl.farmmanagement.security.SecurityConfig;
@@ -33,8 +34,9 @@ public class UserService {
         return mapToUserDTO(savedUser);
     }
 
-    public List<User> findAll(){
-        return userRepository.findAll().stream().map(this::mapToUserDTO).collect(Collectors.toList());
+    public List<User> findAllUsers(){
+
+        return userRepository.findAllByRoles(roleRepository.findById(1L).get()).stream().map(this::mapToUserDTO).collect(Collectors.toList());
     }
 
     public void delete(Long id){
@@ -75,6 +77,7 @@ public class UserService {
                 .eMail(a.getEMail())
                 .givenName(a.getGivenName())
                 .surname(a.getSurname())
+                .roles(a.getRoles())
                 .build();
     }
 }
