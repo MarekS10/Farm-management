@@ -40,9 +40,9 @@
 
         <tbody>
         <tr th:each="tempOperation : ${operations}">
-            <td th:text="${tempOperation.getTask()}"/>
-            <td th:text="${tempOperation.isDone()}"/>
-            <td th:text="${tempOperation.getOperationDate()}"/>
+            <td th:text="${tempOperation.getTask()}" class="textColumn"></td>
+            <td th:text="${tempOperation.isDone()}"></td>
+            <td th:text="${tempOperation.getOperationDate()}"></td>
             <td>
                 <span th:if="${!tempOperation.isDone()}">
                 <a th:href="@{/user/operations/updateOperation(id=${tempOperation.getId()})}">Update</a>
