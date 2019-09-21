@@ -69,35 +69,40 @@ public class FieldOperationController {
             return "operation-form";
         } else {
             Long fieldId = (Long) request.getSession().getAttribute("fieldId");
-            FieldEntity field = fieldOperationService.findFieldById(fieldId);
-            newOperation.setFieldEntity(field);
-            fieldOperationService.addFieldOperation(newOperation);
+            String fieldName = (String) request.getSession().getAttribute("fieldName");
+            fieldOperationService.addFieldOperation(fieldId,newOperation);
             return String.format("redirect:/user/operations?id=%d&fieldName=%s",
-                    field.getId(), field.getName());
+                    fieldId, fieldName);
         }
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/updateOperation")
     public String updateOperations(@RequestParam Long id, Model model, HttpServletRequest request) {
         Optional<FieldOperation> theOperation = fieldOperationService.findOperationById(id);
         FieldOperation fieldOperation;
-        if (theOperation.isPresent()) {
-            fieldOperation = theOperation.get();
-
-        } else {
-            fieldOperation = new FieldOperation();
-        }
+        fieldOperation = theOperation.orElseGet(FieldOperation::new);
         request.getSession().setAttribute("addOrUpdateOperation", "Update");
         model.addAttribute("operation", fieldOperation);
         return "operation-form";
     }
 
+
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/delete")
     public String deleteById(@RequestParam Long id,
                              HttpServletRequest request) {
         Long fieldId = (Long) request.getSession().getAttribute("fieldId");
         String fieldName = (String) request.getSession().getAttribute("fieldName");
         fieldOperationService.deleteById(id);
+        return String.format("redirect:/user/operations?id=%d&fieldName=%s", fieldId,fieldName);
+    }
+
+    @GetMapping("/doneTask")
+    public String doneTask(@RequestParam("id") Long operationId, HttpServletRequest request){
+        Long fieldId = (Long) request.getSession().getAttribute("fieldId");
+        String fieldName = (String) request.getSession().getAttribute("fieldName");
+        fieldOperationService.doneTask(fieldId,operationId);
         return String.format("redirect:/user/operations?id=%d&fieldName=%s", fieldId,fieldName);
     }
 }

@@ -15,54 +15,65 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class FieldOperationService {
 
-  private final FieldOperationRepository fieldOperationRepository;
-  private final FieldRepository fieldRepository;
+    private final FieldOperationRepository fieldOperationRepository;
+    private final FieldRepository fieldRepository;
 
-  public FieldOperation addFieldOperation(FieldOperation fieldOperation) {
-    FieldOperationEntity fieldOperationEntity = mapToFieldOperationEntity(fieldOperation);
-    fieldOperationRepository.save(fieldOperationEntity);
-    return mapToFieldOperation(fieldOperationEntity);
-  }
+    public FieldOperation addFieldOperation(Long fieldId, FieldOperation fieldOperation) {
 
-  public List<FieldOperationEntity> findAllOperationsByField(Long id) {
-    return fieldOperationRepository.findAllByFieldEntityId(id);
-  }
-
-  public Optional<FieldOperation> findOperationById(Long id){
-    Optional<FieldOperationEntity> foundFieldOperation = fieldOperationRepository.findById(id);
-    if (foundFieldOperation.isPresent()){
-      FieldOperation fieldOperation = mapToFieldOperation(foundFieldOperation.get());
-      return Optional.of(fieldOperation);
-    }else {
-      return Optional.empty();
+        fieldRepository.findById(fieldId)
+                .ifPresent(fieldOperation::setFieldEntity);
+        FieldOperationEntity fieldOperationEntity = mapToFieldOperationEntity(fieldOperation);
+        fieldOperationRepository.save(fieldOperationEntity);
+        return mapToFieldOperation(fieldOperationEntity);
     }
-  }
 
-  public void deleteById(Long id){
-    fieldOperationRepository.deleteById(id);
-  }
+    public List<FieldOperationEntity> findAllOperationsByField(Long id) {
+        return fieldOperationRepository.findAllByFieldEntityId(id);
+    }
 
-  public FieldEntity findFieldById(Long id) {
-    return fieldRepository.findById(id).get();
-  }
+    public Optional<FieldOperation> findOperationById(Long id) {
+        Optional<FieldOperationEntity> foundFieldOperation = fieldOperationRepository.findById(id);
+        if (foundFieldOperation.isPresent()) {
+            FieldOperation fieldOperation = mapToFieldOperation(foundFieldOperation.get());
+            return Optional.of(fieldOperation);
+        } else {
+            return Optional.empty();
+        }
+    }
 
-  private FieldOperation mapToFieldOperation(FieldOperationEntity field) {
-    return FieldOperation.builder()
-        .id(field.getId())
-        .task(field.getTask())
-        .operationDate(field.getOperationDate())
-        .isDone(field.isDone())
-        .fieldEntity(field.getFieldEntity())
-        .build();
-  }
+    public FieldOperation doneTask(Long fieldId, Long id) {
+        Optional<FieldOperationEntity> foundOperation = fieldOperationRepository.findById(id);
+        foundOperation.ifPresent(operation -> {
+            operation.setDone(true);
+            FieldOperation fieldOperation = mapToFieldOperation(operation);
+            addFieldOperation(fieldId,fieldOperation);
+        });
+        return mapToFieldOperation(foundOperation.get());
+    }
 
-  private FieldOperationEntity mapToFieldOperationEntity(FieldOperation field) {
-    return FieldOperationEntity.builder()
-        .id(field.getId())
-        .task(field.getTask())
-        .operationDate(field.getOperationDate())
-        .isDone(field.isDone())
-        .fieldEntity(field.getFieldEntity())
-        .build();
-  }
+    public void deleteById(Long id) {
+        fieldOperationRepository.deleteById(id);
+    }
+
+    private FieldOperation mapToFieldOperation(FieldOperationEntity field) {
+        return FieldOperation.builder()
+                .id(field.getId())
+                .task(field.getTask())
+                .operationDate(field.getOperationDate())
+                .isDone(field.isDone())
+                .fieldEntity(field.getFieldEntity())
+                .build();
+    }
+
+    private FieldOperationEntity mapToFieldOperationEntity(FieldOperation field) {
+        return FieldOperationEntity.builder()
+                .id(field.getId())
+                .task(field.getTask())
+                .operationDate(field.getOperationDate())
+                .isDone(field.isDone())
+                .fieldEntity(field.getFieldEntity())
+                .build();
+    }
+
+
 }
